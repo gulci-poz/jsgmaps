@@ -11,3 +11,11 @@ body {
 #gmap {
     height: 100%;
 }
+
+#markerChessSF {
+    color: #f00;
+}
+
+#markerChessLA {
+    color: #00f;
+}

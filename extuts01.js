@@ -23,57 +23,60 @@
     });
     */
 
-    var optionsClick = {
-        obj: map.gMap,
-        event: "click",
-        callback: function (e) {
-            map.logMsg(e, "clicked");
-        }
-    };
+    // dla danego zbioru zdarzeń uruchamiamy listenery
 
-    var optionsDragend = {
-        obj: map.gMap,
-        event: "dragend",
-        callback: function (e) {
-            map.logMsg(e, "finished dragging");
-        }
-    };
+    var events = ["click", "dragend", "rightclick", "zoom_changed"];
 
-    var optionsClickRight = {
-        obj: map.gMap,
-        event: "rightclick",
-        callback: function (e) {
-            map.logMsg(e, "clicked right");
-        }
-    };
+    for (var i = 0; i < events.length; i++) {
+        // musimy mieć osobny EC (też closure) dla każdej funkcji
+        (function () {
+            var evt = events[i];
 
-    var optionsZoomChange = {
-        obj: map.gMap,
-        event: "zoom_changed",
-        callback: function (e) {
-            map.logMsg(e, "zoom changed");
-        }
-    };
-
-    map._on(optionsClick);
-    map._on(optionsDragend);
-    map._on(optionsClickRight);
-    map._on(optionsZoomChange);
+            map._on({
+                obj: map.gMap,
+                event: evt,
+                callback: function (e) {
+                    map.logMsg(e, evt);
+                }
+            });
+        }());
+    }
 
     // możemy dodawać nowe właściwości, ktore potem będą częścią obiektu mapy (tutaj np. id)
-    map.addMarker({
+    var marker = map.addMarker({
         lat: 37.791350,
         lng: -122.435883,
         draggable: true,
         icon: "icons/chess_orange.png",
         visible: true,
         id: 1,
+        content: '<div id="markerChessSF">I love SF</div>'
+        // trzeba by się zdecydować czy obsługujemy konkretne zdarzenie rozpoznając content czy też sprawdzamy istnienie jakiegokolwiek zdarzenia (Mapste.js); można dodać obsługę wielu zdarzeń (np. przekazywanie tabeli ze zdarzeniami i potem jej odczytywanie w Mapster.js)
+        /*
         event: {
             name: "click",
             callback: function () {
-                console.log("marker clicked");
+                //console.log("marker clicked");
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "I love SF"
+                });
+
+                // drugi argument - miejsce centrowania infoBoxa
+                infoWindow.open(map.gMap, marker);
             }
         }
+        */
+    });
+
+    var marker2 = map.addMarker({
+        lat: 37.781350,
+        lng: -122.485883,
+        draggable: true,
+        icon: "icons/chess_orange.png",
+        visible: true,
+        id: 1,
+        content: '<div id="markerChessLA">I love LA</div>'
     });
 
 }(window, window.Mapster || (window.Mapster = {})));

@@ -50,6 +50,22 @@
                         callback: options.event.callback
                     });
                 }
+
+                if (options.content) {
+                    this._on({
+                        obj: marker,
+                        event: "click",
+                        callback: function () {
+                            var infoWindow = new google.maps.InfoWindow({
+                                content: options.content
+                            });
+
+                            infoWindow.open(this.gMap, marker);
+                        }
+                    });
+                }
+
+                return marker;
             },
             _createMarker: function (options) {
                 // można też zdefiniować obiekt LatLng, jeśli podamy literał, to jest on tworzony automatycznie przez google
