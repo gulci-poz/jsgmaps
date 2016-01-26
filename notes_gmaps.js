@@ -17,5 +17,10 @@ You Don't Know JS
 Node.js - Alicea
 Node.js - Udemy, Pluralsight, Book - Packt
 
-?OpenLayers
+JS Design Patterns
+
+?OpenLayers - czy warto?
+
+?CompanyBase - CMS + helpdesk
+?PathMan - definiowanie własnych ścieżek
 */
